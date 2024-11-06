@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        .article-list {
+            margin-top: 20px;
+        }
+        .article-item {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        .article-item h3 {
+            margin: 0;
+        }
+        .article-item p {
+            margin: 5px 0;
+        }
+        .article-actions {
+            margin-top: 10px;
+        }
+        .btn {
+            padding: 8px 15px;
+            margin-right: 10px;
+            text-decoration: none;
+            color: white;
+            background-color: #007BFF;
+            border-radius: 4px;
+        }
+        .btn-danger {
+            background-color: #dc3545;
+        }
+        .btn-warning {
+            background-color: #ffc107;
+        }
+    </style>
+</head>
+<body>
+    <h1>Admin Dashboard</h1>
+    <a href="{{ url_for('add_article') }}" class="btn">Add New Article</a>
+    <a href="{{ url_for('logout') }}" class="btn">Logout</a>
+
+    <h2>Published Articles</h2>
+    <div class="article-list">
+        {% if articles %}
+            {% for article in articles %}
+                <div class="article-item">
+                    <h3>{{ article.title }}</h3>
+                    <p><strong>Date:</strong> {{ article.date }}</p>
+                    <p><strong>Content:</strong> {{ article.content[:100] }}...</p> <!-- Display first 100 chars -->
+                    
+                    <div class="article-actions">
+                        <a href="{{ url_for('edit_article', article_id=article.title.replace(' ', '_').lower()) }}" class="btn btn-warning">Edit</a>
+                        
+                        <form action="{{ url_for('delete_article', article_id=article.title.replace(' ', '_').lower()) }}" method="POST" style="display:inline;">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No articles published yet.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

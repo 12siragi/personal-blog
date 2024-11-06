@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Article</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .back-btn {
+            display: block;
+            margin-top: 10px;
+            text-decoration: none;
+            background-color: #6c757d;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Edit Article</h1>
+
+    <div class="form-container">
+        <!-- Assuming 'article' is a dictionary or object passed from the backend -->
+        <form action="{{ url_for('update_article', article_id=article.id) }}" method="POST">
+            <label for="title">Article Title:</label>
+            <input type="text" id="title" name="title" value="{{ article.title }}" required placeholder="Enter article title">
+
+            <label for="content">Article Content:</label>
+            <textarea id="content" name="content" rows="6" required placeholder="Enter article content">{{ article.content }}</textarea>
+
+            <label for="date">Publication Date:</label>
+            <input type="date" id="date" name="date" value="{{ article.date }}" required>
+
+            <button type="submit">Update Article</button>
+        </form>
+
+        <a href="{{ url_for('admin_dashboard') }}" class="back-btn">Back to Dashboard</a>
+    </div>
+</body>
+</html>
